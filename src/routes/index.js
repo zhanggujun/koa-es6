@@ -1,14 +1,4 @@
-import { Controller,Post,Get } from '../decorator'
+import login from './login'
+import users from './users'
 
-@Controller()
-class Index{
-  @Get('/string')
-  async getString(ctx){
-    ctx.body = {
-      code: true,
-      text: '装饰器返回的string'
-    }
-  }
-}
-
-export default Index
+export default [ login,users ]

@@ -4,7 +4,7 @@ function Controller( prefix = '' ) {
   const router = new Router()
   if (prefix)
     router.prefix(prefix)
-  return function (target) {
+  return function(target){
     const targetReq = Object.getOwnPropertyDescriptors(target.prototype)
     for (const v in targetReq) {
       // 排除类的构造方法
@@ -18,22 +18,23 @@ function Controller( prefix = '' ) {
 }
 
 
-function Request({ url = '', method = '' } = {}) {
-  return function (target, name, descriptor) {
+function Request({ url = '',method = '' } = {}) {
+  return function(target,name,descriptor){
     const fn = descriptor.value
     descriptor.value = router => {
       router[method](url, async (ctx, next) => {
-        await fn(ctx, next)
+        await fn(ctx,next)
       })
     }
   }
 }
 
-function Redirect(){
-  return function(target, name, descriptor){
+function Auth(){ // 用户登录鉴权
+  return function(target,name,descriptor){
     const fn = descriptor.value
     descriptor.value = async (ctx,next) => {
-      await fn(ctx,next)
+      ctx.body = { code: '装饰器auth' }
+      // await fn(ctx,next)
     }
   }
 }
@@ -70,4 +71,4 @@ function Patch(url) {
   return Request({ url, method: RequestMethod.PATCH })
 }
 
-export { Controller,Redirect,Post,Get,Put,Delete,Options,Head,Patch }
+export { Controller,Post,Get,Put,Delete,Options,Head,Patch,Auth }

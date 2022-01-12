@@ -1,4 +1,4 @@
-import { Controller,Post,Get,Auth } from '../decorator'
+import { Controller,Post,Get,Auth } from '@/decorator'
 
 @Controller('/users')
 class Users{

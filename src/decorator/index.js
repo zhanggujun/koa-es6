@@ -2,7 +2,7 @@ import Router from 'koa-router'
 
 function Controller( prefix = '' ) {
   const router = new Router()
-  if (prefix)
+  if(prefix)
     router.prefix(prefix)
   return function(target){
     const targetReq = Object.getOwnPropertyDescriptors(target.prototype)

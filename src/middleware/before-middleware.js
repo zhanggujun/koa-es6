@@ -9,10 +9,16 @@ import json from 'koa-json'
 import parser from 'koa-bodyparser'
 import logger from 'koa-logger'
 
-export const RegisterBeforeMiddleware = app => {
-  app.use(parser({ enableTypes:['json','form','text'] }))
-  app.use(json())
-  app.use(logger())
+class BeforeMiddleware{
+  constructor(app){
+    this.app = app
+    this.register()
+  }
+  register(){
+    this.app.use(parser({ enableTypes:['json','form','text'] }))
+    this.app.use(json())
+    this.app.use(logger())
+  }
 }
 
-
+export default BeforeMiddleware

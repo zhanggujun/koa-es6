@@ -1,27 +1,25 @@
 import Koa from 'koa'
 const app = new Koa()
 
-import json from 'koa-json'
-import onerror from 'koa-onerror'
-import parser from 'koa-bodyparser'
-import logger from 'koa-logger'
+// middleware
+import InitMiddleware from '@/middleware/init-middleware'
+import LogMiddleware from '@/middleware/log-middleware'
+import BeforeMiddleware from '@/middleware/before-middleware'
+import RouterMiddleware from '@/middleware/router-middleware'
 
-import Middleware from './middleware'
+// error-handler
+import ErrorHandler from '@/handler/error'
 
-// error handler
-onerror(app)
+// 初始化(挂在一些参数到ctx上)
+new InitMiddleware(app)
+// before-middleware
+new BeforeMiddleware(app)
+// 日志
+new LogMiddleware(app)
+// router-middleware
+new RouterMiddleware(app)
 
-const list = [
-  parser({ enableTypes:['json','form','text'] }),
-  json(),
-  logger()
-]
-
-new Middleware(app).system(list)
-
-// error-handling
-app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
-})
+// error-handler
+new ErrorHandler(app)
 
 export default app

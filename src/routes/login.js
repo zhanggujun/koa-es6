@@ -1,9 +1,8 @@
-import { Controller,Post,Get,Auth } from '../decorator'
+import { Controller,Post,Get,Auth } from '@/decorator'
 
 @Controller('/login')
 class Index{
   @Get('/string')
-  @Auth()
   async getString(ctx){
     ctx.body = {
       code: true,

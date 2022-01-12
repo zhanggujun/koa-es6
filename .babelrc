@@ -6,9 +6,17 @@
         "node": "12.16.2"
       },
       "corejs": "3"
-    }]
+    }],
+    // 压缩代码
+    ["minify"]
   ],
   "plugins": [
+    // 别名
+    ["module-resolver", {
+      "alias": {
+        "@": "./src"
+      }
+    }],
     [
       "@babel/plugin-proposal-decorators",
       { "legacy": true }
